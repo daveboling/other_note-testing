@@ -13,7 +13,8 @@ var expect     = require('chai').expect,
     beforeEach = lab.beforeEach,
     h          = require('../helpers/helpers'),
     db         = h.getDb(),
-    noteId     = null;
+    noteId     = null,
+    fs         = require('fs');
 
 
 describe('User', function(){
@@ -79,6 +80,26 @@ describe('User', function(){
       Note.count({id: 1}, function(err, results){
         expect(err).to.be.null;
         expect(results).to.equal('3');
+        done();
+      });
+    });
+  });
+
+  describe('.upload', function(){
+    it('should upload base64 coded image', function(done){
+      var file = fs.createReadStream(__dirname + '/../fixtures/img.png');
+        Note.upload({token: 'tok'}, file,'img.png', noteId, function(err){
+          expect(err).to.be.null;
+          done();
+       });
+    });
+  });
+
+
+  describe('.uploadmobile', function(){
+    it('should upload base64 coded image from phone', function(done){
+      Note.uploadmobile({token: 'tok'}, 'b64image', noteId, function(err){
+        expect(err).to.be.null;
         done();
       });
     });
