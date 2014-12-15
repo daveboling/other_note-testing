@@ -6,6 +6,7 @@ var Joi  = require('joi'),
 module.exports = {
   description: 'Login a User',
   tags:['users'],
+  cors: {origin: ['http://localhost:8100'],credentials: true},
   validate: {
     payload: {
       username: Joi.string().min(3).max(12).required(),
