@@ -2,7 +2,7 @@
 
 module.exports = [
   {
-    plugin: require('good'),
+    register: require('good'),
     options: {
       reporters: [{
         reporter: require('good-console'),
@@ -11,9 +11,9 @@ module.exports = [
     }
   },
   {
-    plugin: require('lout')
+    register: require('lout')
   },
   {
-    plugin: require('hapi-auth-cookie')
+    register: require('hapi-auth-cookie')
   }
 ];

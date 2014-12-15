@@ -6,6 +6,8 @@ var Joi  = require('joi'),
 module.exports = {
   description: 'Upload a Photo',
   tags:['notes'],
+  cors: {origin: ['http://localhost:8100'],credentials: true},
+  timeout: {server:60000},
   validate: {
     params: {
       noteId: Joi.number().required()
