@@ -2,6 +2,6 @@
 
 [![Build Status](https://travis-ci.org/kadowki/testing-evernode.svg?branch=master)](https://travis-ci.org/kadowki/testing-evernode)
 
-###testing-evernode
+#testing-evernode
 
-# A brief introduction to testing with PSQL on TravisCI and Coveralls
+### A brief introduction to testing with PSQL on TravisCI and Coveralls
