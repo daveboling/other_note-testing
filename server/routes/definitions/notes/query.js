@@ -6,6 +6,7 @@ var Joi  = require('joi'),
 module.exports = {
   description: 'Query Notes',
   tags:['notes'],
+  cors: {origin: ['http://localhost:8100'],credentials: true},
   validate: {
     query: {
       limit: Joi.number(),
