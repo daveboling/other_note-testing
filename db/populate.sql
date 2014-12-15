@@ -1,0 +1,1 @@
+insert into users (id, username, password, avatar, token) values (1337, 'Bob', '$2a$08$IceXWWlDjnAIn8LPS7xf5eU0o/NI131PFMMvzd.A7BMDl25buI9Am', 'a.png', 'tok');
