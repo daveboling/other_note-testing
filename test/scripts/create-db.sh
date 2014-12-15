@@ -1,5 +1,10 @@
 #!/bin/bash
 #creates the schema and functions for SQL
+if [ -z "$1" ] ; then
+  echo "Enter a database name"
+  exit 1
+fi
+
 psql $1 -f ../../db/tables/users.sql
 psql $1 -f ../../db/tables/notes.sql
 psql $1 -f ../../db/tables/photos.sql
