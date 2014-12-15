@@ -19,3 +19,5 @@ env:
   global:
     - DATABASE_URL=postgres://postgres@localhost/evernode_test
     - AWS_BUCKET=db-evernode-test
+    - secure: "W7MIHYE9xzFaVL2X6EpB1gbGlBIpyT194uyOXrgutbtDcmjxBvbJlGrXDUQqvM02062IUz4O1UNBdGKNySw+/Oz9yIn5bS99QdtAf4mjy3ey+ebCB/JfFsLm63n2LrYZHCWUTv7lPx0K+ECPlYPvFUsgGa/2RmiEdpIzm9Bm0Z8="
+    - secure: "TmTChgaMUu2C4NuGF/w/uVm+DHah+702Ad+8/ngqEj4a818rAxsiMSFQXmj49yzzVzKih3Ms+fcFq7fmW9qt0aMJz+mk2YYRd3LkhgIGvyPCsN1C7ScqI0dBn981vy+1GpTejoKYudiKq8n6deYptjw5NAnBo/zDyIixCnUkZew="
