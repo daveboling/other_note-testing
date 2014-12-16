@@ -16,5 +16,6 @@ server.register(plugins, function(){
   });
 });
 
+module.exports = server;
 //CORS config is now part of the route configuration
 //{cors:{origin: ['http://localhost:8100'],credentials: true}, timeout:{client:60000}}
