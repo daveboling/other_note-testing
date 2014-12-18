@@ -52,6 +52,7 @@
     "coveralls": "^2.11.2",
     "form-data": "^0.2.0",
     "lab": "^5.1.0",
+    "protractor": "^1.5.0",
     "stream-to-promise": "^1.0.4"
   }
 }
