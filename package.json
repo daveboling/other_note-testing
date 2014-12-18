@@ -1,13 +1,13 @@
 {
-  "name": "hapi-technologies",
+  "name": "testing-evernode",
   "version": "1.0.0",
-  "description": "Hapi Technologies",
+  "description": "testing-evernode",
   "engines": {
     "node": "0.10.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nss-cohort-2014-06-07/hapi-technologies"
+    "url": "https://github.com/kadowki/hapi-technologies"
   },
   "bin": {
     "coveralls": "./node_modules/coveralls/bin/coveralls.js"
@@ -17,9 +17,10 @@
     "postinstall": "grunt deploy",
     "syntax": "grunt build",
     "test": "make test",
+    "e2e": "make test-e2e",
     "coveralls": "make test-cov | coveralls"
   },
-  "author": "Chyld Medford <chyld.medford@gmail.com>",
+  "author": "David Boling <daviddboling@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.0.28",

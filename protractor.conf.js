@@ -4,13 +4,17 @@ config.seleniumAddress = 'http://localhost:4444/wd/hub';
 config.multipleCapabilities = [
   {
     'browserName': 'firefox'
+  },
+  {
+    'browserName': 'chrome'
   }
 ];
 
 
 //need to see where tests are
 config.suites = {
-  home: 'test/e2e/home/**/*.spec.js'
+  home:     'test/e2e/home/**/*.spec.js',
+  auth:     'test/e2e/authentication/**/*.spec.js'
 };
 
 //Jasmine configuration
