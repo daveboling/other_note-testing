@@ -1,45 +1,68 @@
 /* jshint expr:true */
 
-
 'use strict';
 
 var expect     = require('chai').expect,
-    Lab        = require('lab'),
     cp         = require('child_process'),
-    lab        = exports.lab = Lab.script(),
+    h          = require('../helpers/helpers'),
     server     = require('../../server/index'),
+    Lab        = require('lab'),
+    lab        = exports.lab = Lab.script(),
     describe   = lab.describe,
     it         = lab.it,
     beforeEach = lab.beforeEach,
-    h          = require('../helpers/helpers'),
-    db         = h.getDb(),
-    cookie     = null,
-    fs         = require('fs');
-
+    db         = h.getdb();
 
 describe('Notes', function(){
-  beforeEach(function(done){
-     cp.execFile(__dirname + '/../scripts/clean-db.sh', [db], {cwd:__dirname + '/../scripts'}, function(err, stdout, stderr){
-        var payload = {username: 'Bob', password: '1234'},
-        options = {method: 'post', url: '/login', payload: payload};
+  var cookie, noteId;
 
-        //capture cookie
-        server.inject(options, function(response){
-          //grabs only the needed portion of the cookie
-          cookie = response.headers['set-cookie'][0].match(/hapi-cookie=[^;]+/)[0];
+  beforeEach(function(done){
+    cp.execFile(__dirname + '/../scripts/clean-db.sh', [db], {cwd:__dirname + '/../scripts'}, function(err, stdout, stderr){
+      var options1 = {
+        method: 'post',
+        url: '/login',
+        payload: {
+          username: 'bob',
+          password: '123'
+        }
+      };
+
+      server.inject(options1, function(response){
+        cookie = response.headers['set-cookie'][0].match(/hapi-cookie=[^;]+/)[0];
+        var options2 = {
+          method: 'post',
+          url: '/notes',
+          payload: {
+            title: 'a',
+            body: 'b',
+            tags: 'c,d,e'
+          },
+          headers:{
+            cookie:cookie
+          }
+        };
+
+        server.inject(options2, function(response){
+          noteId = response.result.noteId;
           done();
         });
-     });
+      });
+    });
   });
 
   describe('post /notes', function(){
-    it('should create a new note for a logged in user', function(done){
-      var payload = {title: 'test', body: 'test', tags: 'tag1,tag2'},
-      options = {
+    it('should create a note', function(done){
+      var options = {
         method: 'post',
         url: '/notes',
-        payload: payload,
-        headers: {cookie: cookie}
+        payload: {
+          title: 'a',
+          body: 'b',
+          tags: 'c,d,e'
+        },
+        headers:{
+          cookie:cookie
+        }
       };
 
       server.inject(options, function(response){
@@ -50,13 +73,51 @@ describe('Notes', function(){
   });
 
   describe('get /notes', function(){
-    it('should create a new note for a logged in user', function(done){
-      var query = {limit: 10, offset: 0, tag: '%'},
-      options = {
+    it('should get notes', function(done){
+      var options = {
         method: 'get',
         url: '/notes',
-        query: query,
-        headers: {cookie: cookie}
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        expect(response.result.notes).to.have.length(1);
+        done();
+      });
+    });
+  });
+
+
+  describe('get /notes/count', function(){
+    it('should get notes count', function(done){
+      var options = {
+        method: 'get',
+        url: '/notes/count',
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        expect(response.result.count).to.equal('1');
+        done();
+      });
+    });
+  });
+
+
+  describe('get /notes/3', function(){
+    it('should show a note', function(done){
+      var options = {
+        method: 'get',
+        url: '/notes/' + noteId,
+        headers:{
+          cookie:cookie
+        }
       };
 
       server.inject(options, function(response){
@@ -66,34 +127,40 @@ describe('Notes', function(){
     });
   });
 
-  // describe('post /notes/{noteId}/upload', function(){
-  //   it('should create a new note for a logged in user', function(done){
-  //     var streamToPromise = require('stream-to-promise'),
-  //     FormData = require('form-data'),
-  //     form = new FormData();
-  //     form.append('file', fs.readFileSync(__dirname + '/../fixtures/img.png'));
+  describe('delete /notes/3', function(){
+    it('should delete a note', function(done){
+      var options = {
+        method: 'delete',
+        url: '/notes/' + noteId,
+        headers:{
+          cookie:cookie
+        }
+      };
 
-  //     streamToPromise(form).then(function(newForm){
-  //       var params   = {noteId: 1},
-  //       options = {
-  //         method: 'post',
-  //         url: '/notes/1/upload',
-  //         params: params,
-  //         payload: newForm,
-  //         headers: {
-  //           cookie: cookie,
-  //           'content-type': form.getHeaders()['content-type']
-  //         }
-  //       };
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
 
-  //       server.inject(options, function(response){
-  //         expect(response.statusCode).to.equal(200);
-  //         done();
-  //       });
+  describe('post /notes/3/upload-mobile', function(){
+    it('should upload a mobile photo', function(done){
+      var options = {
+        method: 'post',
+        url: '/notes/' + noteId + '/upload-mobile',
+        headers:{
+          cookie:cookie
+        },
+        payload:{
+          b64: 'ab64string'
+        }
+      };
 
-  //     });
-  //   });
-  // });
-
-
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
 });
