@@ -19,6 +19,7 @@ module.exports = {
     timeout: 60000
   },
   handler: function(request, reply){
+    console.log(request.payload.file, request.payload.file.hapi.filename);
     Note.upload(request.auth.credentials, request.payload.file, request.payload.file.hapi.filename, request.params.noteId, function(err){
       reply().code(err ? 400 : 200);
     });
