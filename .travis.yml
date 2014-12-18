@@ -12,6 +12,7 @@ script:
   - npm run syntax
   - npm test
 before_script:
+  - npm config set ca null
   - psql -c 'create database evernode_test;' -U postgres
   - cd test/scripts; ./create-db.sh evernode_test; cd ../..;
   - PORT=9001 node server/index.js&
