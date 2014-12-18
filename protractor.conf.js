@@ -1,11 +1,10 @@
 var config = {};
 
-config.seleniumAddress = 'http://localhost:4444/wd/hub';
-config.multipleCapabilities = [
-  {
-    'browserName': 'firefox'
-  }
-];
+if(process.env.TRAVIS_JOB_NUMBER){
+  config = require('./protractor-sauce.conf');
+}else{
+  config = require('./protractor-local.conf');
+}
 
 
 //need to see where tests are
