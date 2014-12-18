@@ -19,7 +19,7 @@ describe('register', function(){
 
   it('should register a new user', function(){
     //test by ng-model
-    element(by.model('user.username')).sendKeys('sam');
+    element(by.model('user.username')).sendKeys('sam' + h.random(5000)); //random number for multiple browsers
     element(by.model('user.password')).sendKeys('1234');
     element(by.model('user.avatar')).sendKeys('https://pbs.twimg.com/profile_images/604644048/sign051.gif');
     element(by.css('button[ng-click]')).click();
