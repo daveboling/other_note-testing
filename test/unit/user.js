@@ -33,7 +33,7 @@ describe('User', function(){
 
   describe('.register', function(){
     it('should register a new user', function(done){
-      var payload = {username: 'Sam', password: '1234', avatar:'https://www.apple.com/global/elements/flags/16x16/usa_2x.png'};
+      var payload = {username: 'Samuel', password: '1234', avatar:'https://www.apple.com/global/elements/flags/16x16/usa_2x.png'};
       User.register(payload, function(err){
         expect(err).to.be.null;
         done();
